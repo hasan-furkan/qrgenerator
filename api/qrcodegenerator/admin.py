@@ -1,9 +1,4 @@
-from django.contrib import admin
 from .models import QrCode
+from django.contrib import admin
 
-
-class QrCodeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'user', 'qr_code', 'created_at', 'updated_at')
-
-
-admin.site.register(QrCode, QrCodeAdmin)
+admin.site.register(QrCode)
