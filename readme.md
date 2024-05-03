@@ -1,7 +1,7 @@
 # QR Code Generator
 
 ```
-docker-compose up -d
+docker-compose up --build -d
 ```
 
 ```
