@@ -2,7 +2,8 @@ FROM python:3
 
 WORKDIR /app
 
-COPY requirements.txt .
-COPY . .
+ADD ./requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
-CMD ["python", "manage.py", "runserver"]
+ADD . /app
+CMD python manage.py migrate && gunicorn -b 0.0.0.0:8000 --log-level debug --reload -w 9 qrgenerator.wsgi:application
+
