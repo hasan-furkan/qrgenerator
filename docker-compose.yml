@@ -1,0 +1,40 @@
+version: '4.0'
+
+services:
+  db:
+    image: postgres
+    container_name: qr_db
+    env_file:
+      - .env
+    ports:
+      - "5448:5432"
+    volumes:
+      - "./postgres:/var/lib/postgresql/data"
+    networks:
+      - qr-network
+
+  web:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: qr_backend
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8006:8000"
+    networks:
+      - qr-network
+
+#  client:
+#    build:
+#      context: ./client
+#      dockerfile: Dockerfile
+#    container_name: qr_client
+#    command: npm run dev
+#    ports:
+#      - "5174:5170"
+#    networks:
+#      - qr-network
+
+
+networks:
+  qr-network:
