@@ -1,8 +1,9 @@
-version: '4.0'
+version: '2.0'
 
 services:
   db:
     image: postgres
+    restart: always
     container_name: qr_db
     env_file:
       - .env
@@ -14,15 +15,25 @@ services:
       - qr-network
 
   web:
+    restart: always
     build:
       context: ./api
       dockerfile: Dockerfile
     container_name: qr_backend
-    command: python manage.py runserver 0.0.0.0:8000
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - db
+    expose:
+      - 8000
     ports:
       - "8006:8000"
     networks:
       - qr-network
+    tty: true
+    environment:
+      - DEBUG=1
+    volumes:
+      - ./api:/app
 
 #  client:
 #    build:
@@ -38,3 +49,4 @@ services:
 
 networks:
   qr-network:
+    driver: bridge
