@@ -5,4 +5,4 @@ from rest_framework import serializers
 class QrCodeSerializer(serializers.ModelSerializer):
     class Meta:
         model = QrCode
-        fields = '__all__'
+        fields = ('id', 'name')
