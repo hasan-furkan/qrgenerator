@@ -38,7 +38,7 @@ export const LoginModal = ({ closeModal, modalId, isModalOpen }) => {
             </button>
           </div>
           <div className="p-4 md:p-5 space-y-4">
-            <LoginForm />
+            <LoginForm closeModal={closeModal} />
           </div>
         </div>
       </div>
