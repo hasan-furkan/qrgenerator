@@ -5,7 +5,15 @@ export const postQr = async (url) => {
     const response = await api.post("/api/qr/code/", { website_url: url });
     return response.data;
   } catch (error) {
-    console.log(error);
+    return null;
+  }
+};
+
+export const getQr = async () => {
+  try {
+    const response = await api.get("/api/qr/code/");
+    return response.data;
+  } catch (error) {
     return null;
   }
 };
