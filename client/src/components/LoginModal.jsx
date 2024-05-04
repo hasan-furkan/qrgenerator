@@ -1,6 +1,11 @@
 import { LoginForm } from "./LoginForm";
 
-export const LoginModal = ({ closeModal, modalId, isModalOpen }) => {
+export const LoginModal = ({
+  closeModal,
+  modalId,
+  isModalOpen,
+  setUsername,
+}) => {
   const modalClass = isModalOpen
     ? "fixed overflow-y-auto overflow-x-hidden top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full"
     : "hidden";
@@ -38,7 +43,7 @@ export const LoginModal = ({ closeModal, modalId, isModalOpen }) => {
             </button>
           </div>
           <div className="p-4 md:p-5 space-y-4">
-            <LoginForm closeModal={closeModal} />
+            <LoginForm closeModal={closeModal} setUsernames={setUsername} />
           </div>
         </div>
       </div>

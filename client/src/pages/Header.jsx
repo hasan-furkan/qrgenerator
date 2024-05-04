@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { LoginModal } from "../components/LoginModal";
+import { useEffect } from "react";
 
-export const Header = () => {
+export const Header = ({ username, setUsername }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const modalId = "default-modal";
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  useEffect(() => {}, [username]);
 
   return (
     <nav className="w-full bg-white dark:bg-slate-900 flex p-4  items-center justify-between">
@@ -57,22 +60,51 @@ export const Header = () => {
           QR Code Generator
         </span>
       </div>
-      <ul className="hidden md:flex space-x-4 dark:text-slate-100 text-slate-900">
-        <li className="bg-blue-500 hover:cursor-pointer rounded-md text-slate-100 px-4 py-2">
-          Register
-        </li>
-        <li className="px-4 py-2 hover:cursor-pointer">
+      {username ? (
+        <div className="flex items-center space-x-2">
+          <span className="hidden md:block text-slate-900 dark:text-slate-100 font-bold text-lg">
+            {username}
+          </span>
           <button
-            onClick={openModal}
-            data-modal-target={modalId}
-            data-modal-toggle={modalId}
-            className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            type="button"
+            className="rounded-full bg-blue-500 p-2"
+            onClick={() => {
+              localStorage.clear();
+              window.location.reload();
+            }}
           >
-            Login
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+              className="h-6 w-6 dark:text-slate-900 text-slate-100"
+            >
+              <path
+                fillRule="evenodd"
+                d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z"
+                clipRule="evenodd"
+              ></path>
+            </svg>
           </button>
-        </li>
-      </ul>
+        </div>
+      ) : (
+        <ul className="hidden md:flex space-x-4 dark:text-slate-100 text-slate-900">
+          <li className="bg-blue-500 hover:cursor-pointer rounded-md text-slate-100 px-4 py-2">
+            Register
+          </li>
+          <li className="px-4 py-2 hover:cursor-pointer">
+            <button
+              onClick={openModal}
+              data-modal-target={modalId}
+              data-modal-toggle={modalId}
+              className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              type="button"
+            >
+              Login
+            </button>
+          </li>
+        </ul>
+      )}
       <button className="rounded-full bg-blue-500 p-2 md:hidden">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -93,6 +125,7 @@ export const Header = () => {
           closeModal={closeModal}
           modalId={modalId}
           isModalOpen={isModalOpen}
+          setUsername={setUsername}
         />
       )}
     </nav>
