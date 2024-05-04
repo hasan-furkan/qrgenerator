@@ -5,8 +5,7 @@ from rest_framework import serializers
 class UsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
-        fields = ('id', 'email', 'password', 'first_name', 'last_name', 'linkedin_url', 'github_url', 'twitter_url', 'instagram_url',
-                  'facebook_url', 'website_url')
+        fields = ('id', 'email', 'password', 'first_name', 'last_name')
         extra_kwargs = {
             'password': {'write_only': True}
         }

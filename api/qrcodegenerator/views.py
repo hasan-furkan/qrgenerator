@@ -18,22 +18,21 @@ class QrCodeViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
 
-    def user_generate_qr_codes(self, user_id, url):
+    def user_generate_qr_codes(self, user_id, url, name):
         user = Users.objects.get(id=user_id)
         first_name = user.first_name
-        last_name = user.last_name
 
         directory_path = 'media/qrcodes'
         if not os.path.exists(directory_path):
             os.makedirs(directory_path)
 
         image = qrcode.make(url)
-        file_name = f'{first_name}_{last_name}.png'
+        file_name = f'{name}-{first_name}.png'
         file_path = f'media/qrcodes/{file_name}'
         image.save(file_path)
 
         qr_code = QrCode.objects.create(
-            name=f'{first_name}_{last_name}',
+            name=f'{name}',
             user=user,
             qr_code=f'qrcodes/{file_name}'
         )
@@ -46,6 +45,7 @@ class QrCodeViewSet(viewsets.ModelViewSet):
             type=openapi.TYPE_OBJECT,
             properties={
                 'website_url': openapi.Schema(type=openapi.TYPE_STRING, description='Website URL'),
+                'name': openapi.Schema(type=openapi.TYPE_STRING, description='Website name'),
             },
             required=['']
         ),
@@ -54,8 +54,9 @@ class QrCodeViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         user_id = request.user.id
         website_url = request.data.get('website_url')
+        name = request.data.get('name')
         if not website_url:
             return JsonResponse({'error': 'Website URL is required'}, status=400)
-        qr_code = self.user_generate_qr_codes(user_id, website_url)
+        qr_code = self.user_generate_qr_codes(user_id, website_url, name)
         serializer = self.get_serializer(qr_code)
         return JsonResponse({'data': serializer.data}, status=201)
