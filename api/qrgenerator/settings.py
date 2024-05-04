@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import datetime
 from pathlib import Path
 import os
 from dotenv import load_dotenv
@@ -152,6 +153,13 @@ SWAGGER_SETTINGS = {
     }
 }
 
+ACCESS_TOKEN_LIFETIME = datetime.timedelta(days=1)
+REFRESH_TOKEN_LIFETIME = datetime.timedelta(days=3)
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': ACCESS_TOKEN_LIFETIME,
+    'REFRESH_TOKEN_LIFETIME': REFRESH_TOKEN_LIFETIME,
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
