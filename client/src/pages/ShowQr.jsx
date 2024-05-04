@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { getQr } from "../../services/qr";
 import { toast } from "react-toastify";
 
-export const ShowQr = () => {
+export const ShowQr = ({ username }) => {
   const [qr, setQr] = useState([]);
 
   const handleGetQr = async () => {
     try {
       const response = await getQr();
       if (response && response.length > 0) {
-        setQr(response); // response doğrudan QR kodları listesi olduğunu varsayarak
+        setQr(response);
       } else {
         toast.error("Failed to fetch QR Code");
       }
@@ -20,7 +20,7 @@ export const ShowQr = () => {
 
   useEffect(() => {
     handleGetQr();
-  }, []);
+  }, [username]);
 
   return (
     <div className="flex flex-wrap">

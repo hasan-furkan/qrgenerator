@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { loginService } from "../../services/auth";
 import { successToast } from "../../components/toastify";
 
-export const LoginForm = ({ closeModal }) => {
+export const LoginForm = ({ closeModal, setUsernames }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -12,6 +12,9 @@ export const LoginForm = ({ closeModal }) => {
 
     if (response) {
       localStorage.setItem("token", response.access);
+      localStorage.setItem("refreshToken", response.refresh);
+      localStorage.setItem("id", response.user.id);
+      setUsernames(response.user.username);
       successToast("Login successful");
       closeModal();
     }

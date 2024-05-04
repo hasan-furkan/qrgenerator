@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import { Header } from "./pages/Header";
 
@@ -6,11 +7,13 @@ import { Content } from "./pages/Content";
 import { ShowQr } from "./pages/ShowQr";
 
 function App() {
+  const [username, setUsername] = useState();
+
   return (
     <div className="mx-auto">
-      <Header />
+      <Header username={username} setUsername={setUsername} />
       <Content />
-      <ShowQr />
+      <ShowQr username={username} />
       <ToastContainer />
     </div>
   );
