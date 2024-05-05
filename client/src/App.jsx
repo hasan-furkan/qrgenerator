@@ -7,7 +7,9 @@ import { Content } from "./pages/Content";
 import { ShowQr } from "./pages/ShowQr";
 
 function App() {
-  const [username, setUsername] = useState();
+  const [username, setUsername] = useState(
+    localStorage.getItem("username") || ""
+  );
 
   return (
     <div className="mx-auto">
