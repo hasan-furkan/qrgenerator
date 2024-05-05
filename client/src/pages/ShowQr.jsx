@@ -11,7 +11,9 @@ export const ShowQr = ({ username }) => {
       if (response && response.length > 0) {
         setQr(response);
       } else {
-        toast.error("Failed to fetch QR Code");
+        if (localStorage.getItem("username")) {
+          toast.error("No QR Codes found");
+        }
       }
     } catch (error) {
       toast.error("Error fetching QR Codes");
