@@ -1,8 +1,11 @@
 import api from "../api";
 
-export const postQr = async (url) => {
+export const postQr = async (name, url) => {
   try {
-    const response = await api.post("/api/qr/code/", { website_url: url });
+    const response = await api.post("/api/qr/code/", {
+      website_url: url,
+      name: name,
+    });
     return response.data;
   } catch (error) {
     return null;
